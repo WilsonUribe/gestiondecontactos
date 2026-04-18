@@ -1,14 +1,16 @@
 package vista;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
+import java.awt.SystemColor;
 
 /*
  * Interfaz gráfica
  */
 public class Ventana extends JFrame {
 
-    public JTextField txtNombre, txtTelefono, txtEmail;
+    public JTextField txtNombre, txtTelefono, txtEmail, txtBuscar;
     public JButton btnAgregar, btnEliminar, btnExportar;
     public JCheckBox chkFavorito;
     public JComboBox<String> cmbCategoria;
@@ -17,14 +19,15 @@ public class Ventana extends JFrame {
     public JProgressBar barra;
 
     public Ventana() {
-    	getContentPane().setBackground(new Color(0, 64, 64));
+    	getContentPane().setBackground(new Color(64, 0, 0));
 
         setTitle("GESTIÓN DE CONTACTOS");
-        setSize(900, 620);
+        setSize(920, 650);
         getContentPane().setLayout(null);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+        // Nombre
         JLabel l1 = new JLabel("NOMBRES:");
         l1.setForeground(new Color(255, 255, 255));
         l1.setBounds(30, 30, 100, 25);
@@ -34,6 +37,7 @@ public class Ventana extends JFrame {
         txtNombre.setBounds(130, 30, 300, 25);
         getContentPane().add(txtNombre);
 
+        // Teléfono
         JLabel l2 = new JLabel("TELÉFONO:");
         l2.setForeground(new Color(255, 255, 255));
         l2.setBounds(30, 70, 100, 25);
@@ -43,6 +47,7 @@ public class Ventana extends JFrame {
         txtTelefono.setBounds(130, 70, 300, 25);
         getContentPane().add(txtTelefono);
 
+        // Email
         JLabel l3 = new JLabel("CORREO:");
         l3.setForeground(new Color(255, 255, 255));
         l3.setBounds(30, 110, 100, 25);
@@ -52,13 +57,13 @@ public class Ventana extends JFrame {
         txtEmail.setBounds(130, 110, 300, 25);
         getContentPane().add(txtEmail);
 
+        // Favorito
         chkFavorito = new JCheckBox("CONTACTOS FAVORITOS");
-        chkFavorito.setBounds(30, 150, 179, 25);
+        chkFavorito.setBounds(30, 150, 192, 25);
         getContentPane().add(chkFavorito);
 
         cmbCategoria = new JComboBox<>();
-        cmbCategoria.setBounds(528, 150, 346, 25);
-        cmbCategoria.addItem("Elige una categoria");
+        cmbCategoria.setBounds(492, 150, 378, 25);
         cmbCategoria.addItem("Familia");
         cmbCategoria.addItem("Trabajo");
         cmbCategoria.addItem("Amigos");
@@ -67,19 +72,20 @@ public class Ventana extends JFrame {
 
         btnAgregar = new JButton("AGREGAR");
         btnAgregar.setForeground(new Color(255, 255, 255));
-        btnAgregar.setBackground(new Color(0, 128, 0));
-        btnAgregar.setBounds(528, 30, 100, 40);
+        btnAgregar.setBackground(new Color(50, 205, 50));
+        btnAgregar.setBounds(489, 30, 100, 40);
         getContentPane().add(btnAgregar);
 
         btnEliminar = new JButton("ELIMINAR");
-        btnEliminar.setBackground(new Color(128, 64, 64));
         btnEliminar.setForeground(new Color(255, 255, 255));
-        btnEliminar.setBounds(774, 30, 100, 40);
+        btnEliminar.setBackground(new Color(255, 0, 0));
+        btnEliminar.setBounds(751, 30, 119, 40);
         getContentPane().add(btnEliminar);
 
-        // Botón exportar
         btnExportar = new JButton("EXPORTAR CSV");
-        btnExportar.setBounds(638, 30, 126, 40);
+        btnExportar.setForeground(new Color(255, 255, 255));
+        btnExportar.setBackground(SystemColor.textHighlight);
+        btnExportar.setBounds(599, 30, 140, 40);
         getContentPane().add(btnExportar);
 
         // Tabla
@@ -93,13 +99,21 @@ public class Ventana extends JFrame {
         tabla = new JTable(modelo);
 
         JScrollPane sp = new JScrollPane(tabla);
-        sp.setBounds(30, 220, 820, 280);
+        sp.setBounds(30, 220, 840, 260);
         getContentPane().add(sp);
+
+        JLabel l4 = new JLabel("BUSCAR POR NOMBRE:");
+        l4.setBounds(30, 500, 170, 25);
+        getContentPane().add(l4);
+
+        txtBuscar = new JTextField();
+        txtBuscar.setBounds(190, 500, 300, 25);
+        getContentPane().add(txtBuscar);
 
         // Barra progreso
         barra = new JProgressBar();
-        barra.setForeground(new Color(0, 128, 0));
-        barra.setBounds(30, 530, 820, 25);
+        barra.setForeground(new Color(128, 255, 128));
+        barra.setBounds(30, 550, 840, 25);
         barra.setStringPainted(true);
         getContentPane().add(barra);
     }

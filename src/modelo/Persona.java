@@ -25,7 +25,7 @@ public class Persona {
     public String getCategoria() { return categoria; }
     public boolean isFavorito() { return favorito; }
 
-    // Formato para JTable
+    // Datos para JTable
     public String[] formatoTabla() {
 
         return new String[] {
@@ -37,7 +37,6 @@ public class Persona {
         };
     }
 
-    // Formato para archivo txt / csv
     public String formatoArchivo() {
 
         return nombre + "," +

@@ -17,7 +17,7 @@ public class PersonaDAO {
         }
     }
 
-    // Guardado del contacto
+    // Guardado de contactos
     public void guardar(Persona p) {
 
         try (PrintWriter pw =
@@ -69,8 +69,7 @@ public class PersonaDAO {
 
     public void actualizarArchivo(List<Persona> lista) {
 
-        try (PrintWriter pw =
-                     new PrintWriter(archivo)) {
+        try (PrintWriter pw = new PrintWriter(archivo)) {
 
             for (Persona p : lista) {
                 pw.println(p.formatoArchivo());

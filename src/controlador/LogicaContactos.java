@@ -1,11 +1,17 @@
 package controlador;
+
 import vista.Ventana;
 import modelo.*;
+
 import java.awt.event.*;
 import java.util.List;
+
 import javax.swing.JOptionPane;
 
-public class LogicaContactos implements ActionListener {
+/*
+ * Controlador principal
+ */
+public class LogicaContactos implements ActionListener, KeyListener {
 
     private Ventana vista;
     private PersonaDAO dao;
@@ -15,22 +21,24 @@ public class LogicaContactos implements ActionListener {
         vista = new Ventana();
         dao = new PersonaDAO();
 
+        // Manejo de botones y busqueda
         vista.btnAgregar.addActionListener(this);
         vista.btnEliminar.addActionListener(this);
         vista.btnExportar.addActionListener(this);
+        vista.txtBuscar.addKeyListener(this);
 
         cargarTabla();
 
         vista.setVisible(true);
     }
     
-    // Metodo main
+ // Main
     public static void main(String[] args) {
 
         new LogicaContactos();
     }
 
-    // Carga de JTable
+    // Carga del JTable
     public void cargarTabla() {
 
         new Thread(() -> {
@@ -54,24 +62,43 @@ public class LogicaContactos implements ActionListener {
 
                 contador++;
 
-                int progreso =
-                        (contador * 100) / total;
+                int progreso = (contador * 100) / total;
 
                 vista.barra.setValue(progreso);
 
                 try {
-                    Thread.sleep(150);
+                    Thread.sleep(100);
                 } catch (Exception e) { }
             }
 
         }).start();
     }
 
-    // Eventos de los botones
+    public void buscarPorNombre() {
+
+        String texto =
+                vista.txtBuscar.getText().toLowerCase();
+
+        vista.modelo.setRowCount(0);
+
+        List<Persona> lista = dao.listar();
+
+        for (Persona p : lista) {
+
+            if (p.getNombre().toLowerCase()
+                    .contains(texto)) {
+
+                vista.modelo.addRow(
+                        p.formatoTabla()
+                );
+            }
+        }
+    }
+
+    // Eventos botones
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        // AGREGAR
         if (e.getSource() == vista.btnAgregar) {
 
             Persona p = new Persona(
@@ -96,7 +123,8 @@ public class LogicaContactos implements ActionListener {
 
         if (e.getSource() == vista.btnEliminar) {
 
-            int fila = vista.tabla.getSelectedRow();
+            int fila =
+                    vista.tabla.getSelectedRow();
 
             if (fila == -1) {
 
@@ -122,7 +150,7 @@ public class LogicaContactos implements ActionListener {
             );
         }
 
-        // el CSV
+        // CSV
         if (e.getSource() == vista.btnExportar) {
 
             new Thread(() -> {
@@ -149,7 +177,7 @@ public class LogicaContactos implements ActionListener {
         }
     }
 
-    // Limpite de cajas
+    // Limpiar casillas
     public void limpiar() {
 
         vista.txtNombre.setText("");
@@ -157,5 +185,21 @@ public class LogicaContactos implements ActionListener {
         vista.txtEmail.setText("");
         vista.chkFavorito.setSelected(false);
         vista.cmbCategoria.setSelectedIndex(0);
-    }    
+    }
+
+    // Evento de búsqueda
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+        if (e.getSource() == vista.txtBuscar) {
+            buscarPorNombre();
+        }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) { }
+
+    @Override
+    public void keyPressed(KeyEvent e) { }
+
 }
