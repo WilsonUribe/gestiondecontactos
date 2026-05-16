@@ -22,7 +22,7 @@ public class Ventana extends JFrame {
 
     public Ventana() {
 
-        getContentPane().setBackground(new Color(51, 0, 0));
+        getContentPane().setBackground(new Color(0, 0, 51));
         setSize(920, 650);
         getContentPane().setLayout(null);
         setLocationRelativeTo(null);
@@ -34,7 +34,7 @@ public class Ventana extends JFrame {
         // Selector de idiomas
         lblIdioma = new JLabel("Idioma:");
         lblIdioma.setForeground(new Color(255, 255, 255));
-        lblIdioma.setBounds(710, 30, 60, 25);
+        lblIdioma.setBounds(696, 30, 60, 25);
         getContentPane().add(lblIdioma);
 
         cmbIdioma = new JComboBox<String>();
